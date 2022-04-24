@@ -1,0 +1,26 @@
+\chapter{4. Median of Two Sorted Arrays}
+\section{Description}
+Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+\\
+The overall run time complexity should be O(log (m+n)).
+\section{Results}
+\textbf{Runtime:} 44 ms, faster than 69.41\% of C++ online submissions for Median of Two Sorted Arrays.\\
+\textbf{Memory Usage:} 89.7 MB, less than 42.98\% of C++ online submissions for Median of Two Sorted Arrays.\\
+\newpage
+\section{Attempt 1 - 2022-04-24}
+Just use the given cpp merge functions. This can be further optimized.
+\begin{lstlisting}
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        auto total = nums1.size() + nums2.size();
+        vector<int> nums(total);
+        merge(nums1.begin(), nums1.end(), nums2.begin(), nums2.end(), nums.begin());
+        if (total % 2 == 0) {
+            return (nums[total/2] + nums[total/2 - 1]) / 2.0;
+        } else {
+            return nums[total/2];
+        }
+    }
+};
+\end{lstlisting}

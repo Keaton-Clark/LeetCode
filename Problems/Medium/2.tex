@@ -1,13 +1,13 @@
 \chapter{2. Add Two numbers}
-\textbf{Description-}\\
+\section{Description}
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 \\
 You may assume the two numbers do not contain any leading zero, except the number 0 itself.\\
-\textbf{Results-}\\
+\section{Results}
 \textbf{Runtime:} 47 ms, faster than 55.66\% of C++ online submissions for Add Two Numbers.\\
 \textbf{Memory Usage:} 71.4 MB, less than 50.94\% of C++ online submissions for Add Two Numbers.\\
 \newpage
-Try 1: Worked great until I realized that the numbers can be up to $9*10^{100}$. Turn each list into
+\section{Attempt 1 - 2022-04-23} Worked great until I realized that the numbers can be up to $9*10^{100}$. Turn each list into
 ints, sums them, and uses a recursive function to convert it back into a reversed linked list.\\
 \begin{lstlisting}
 /**
@@ -47,7 +47,7 @@ public:
 };
 \end{lstlisting}
 \newpage
-Try 2: The correct way to do it. Sums them just like an adder in a cpu would. Sums each digit and has a carry digit to keep track of overflows.
+\section{Attempt 2 - 2022-04-23} The correct way to do it. Sums them just like an adder in a cpu would. Sums each digit and has a carry digit to keep track of overflows.
 \begin{lstlisting}
 /**
  * Definition for singly-linked list.
