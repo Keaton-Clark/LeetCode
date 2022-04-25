@@ -1,0 +1,110 @@
+\chapter{23. Merge K Sorted Lists}
+\section{Description}
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+\\
+Merge all the linked-lists into one sorted linked-list and return it.
+\section{Results}
+\textbf{Attempt 1}
+\textbf{Runtime:}
+30 ms, faster than 63.70\% of C++ online submissions for Merge k Sorted Lists.\\
+\textbf{Memory Usage:}
+13.6 MB, less than 36.67\% of C++ online submissions for Merge k Sorted Lists.\\
+\textbf{Attempt 2}
+\textbf{Runtime:}
+20 ms, faster than 94.42\% of C++ online submissions for Merge k Sorted Lists.\\
+\textbf{Memory Usage:}
+13.4 MB, less than 45.00\% of C++ online submissions for Merge k Sorted Lists.\\
+\newpage
+\section{Attempt 1}
+Had to learn priorty queues for this one, that's something they don't teach you in school. Loads each link into the queue which is then sorted as they are added then
+one by one links the top node of the queue to the next node in the queue.
+\begin{lstlisting}
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+using namespace std;
+class Compare {
+public:
+    bool operator() (ListNode* A, ListNode* B) {
+        return (A->val > B->val);
+    }    
+};
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.size() == 1) return *lists.begin();
+        priority_queue<ListNode*, vector<ListNode*>, Compare> pq;
+        for (auto i = lists.begin(); i < lists.end(); i++) {
+            auto curr = *i;
+            if (!curr) continue;
+            do {
+                pq.push(curr);
+            } while ((curr = curr->next));
+        }
+        auto output = (pq.empty()) ? nullptr : pq.top();
+        while (!pq.empty()) {
+            auto curr = pq.top();
+            pq.pop();
+            curr->next = (pq.empty()) ? nullptr : pq.top();
+        }
+        return output;
+    }
+};
+\end{lstlisting}
+\newpage
+\section{Attempt 2}
+I had so much fun with this I decided to optimize this. Since we know the linked lists are already sorted
+we can just pull the leading value from each list and everytime we use a value from that list off the 
+queue we pull another value off that corresponding list. This means we only have at most k comparisons
+per each insertion.
+\begin{lstlisting}
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+typedef pair<ListNode*, int> p;
+using namespace std;
+class Compare {
+public:
+    bool operator() (p A, p B) {
+        return (A.first->val > B.first->val);
+    }    
+};
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.size() == 1) return *lists.begin();
+        priority_queue<p, vector<p>, Compare> pq;
+        for (int i = 0; i < lists.size(); i++) {
+            if (!lists[i]) continue;
+            pq.push({lists[i], i});
+            lists[i] = lists[i]->next;
+        }
+        auto output = (pq.empty()) ? nullptr : pq.top().first;
+        while (!pq.empty()) {
+            auto curr = pq.top();
+            pq.pop();
+            if (lists[curr.second]) {
+                pq.push({lists[curr.second], curr.second});
+                lists[curr.second] = lists[curr.second]->next;
+            }
+            curr.first->next = (pq.empty()) ? nullptr : pq.top().first;
+        }
+        return output;
+    }
+};
+
+\end{lstlisting}

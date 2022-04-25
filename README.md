@@ -1,2 +1,4 @@
 # LeetCode
-My answers to my LeetCode problems
+My Solutions to my LeetCode problems
+# Current Streak
+3
