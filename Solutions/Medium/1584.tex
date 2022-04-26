@@ -1,0 +1,43 @@
+\chapter{1584. Min Cost to Connect All Points}
+\section{Description}
+You are given an array points representing integer coordinates of some points on a 2D-plane, where points[i] = [xi, yi].
+\\
+The cost of connecting two points [xi, yi] and [xj, yj] is the manhattan distance between them: |xi - xj| + |yi - yj|, where |val| denotes the absolute value of val.
+\\
+Return the minimum cost to make all points connected. All points are connected if there is exactly one simple path between any two points.
+\section{Results}
+\textbf{Runtime:} 636 ms, faster than 50.33\% of C++ online submissions for Min Cost to Connect All Points.\\
+\textbf{Memory Usage:} 150.9 MB, less than 19.58\% of C++ online submissions for Min Cost to Connect All Points.\\
+\newpage
+\section{Attempt 1}
+Interesting problem, not sure exactly where I went wrong. Maybe I need to use the given vector more to conserve memory.
+\begin{lstlisting}
+class Solution {
+public:
+    int minCostConnectPoints(vector<vector<int>>& points) {
+        int out = 0;
+        bool connect[points.size()];
+        memset(connect, 0, points.size());
+        connect[0] = true;
+        std::vector<int> dis(points.size(), INT_MAX);
+        int curr = 0;
+        for (int i = 1; i < points.size(); i++) {
+            int min = 0;
+            for (int j = 1; j < points.size(); j++) {
+                if (!connect[j]) {
+                    int tmp = man(points[curr], points[j]);
+                    if (tmp < dis[j]) dis[j] = tmp;
+                    if (dis[j] < dis[min]) min = j;
+                }
+            }
+            connect[min] = true;
+            curr = min;
+            out += dis[min];
+        }
+        return out;
+    }
+    int man(vector<int> A, vector<int> B) {
+        return abs(A[0] - B[0]) + abs(A[1] - B[1]);
+    }
+};
+\end{lstlisting}
