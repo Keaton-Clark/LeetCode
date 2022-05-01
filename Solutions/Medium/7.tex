@@ -1,0 +1,35 @@
+\chapter{7. Reverse Integer}
+\section{Description}
+Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+\\
+Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+\section{Results}
+\textbf{Runtime:}
+0 ms, faster than 100.00\% of C++ online submissions for Reverse Integer.\\
+\textbf{Memory Usage:}
+Memory Usage: 5.7 MB, less than 95.97\% of C++ online submissions for Reverse Integer.\\
+\newpage
+\section{Attempt 1}
+This one was pretty easy but I'm still pretty sure the runtime glitched out but I'm adding it because it makes me feel nice. Simply get the last digit off of x with mod 10, move x one decimal down
+, check if multiplying your output by ten will overflow and then just append the last digit to your output.
+\begin{lstlisting}
+class Solution {
+public:
+    int reverse(int x) {
+        int out = 0;
+        while (x) {
+            int tmp = x % 10;
+            x /= 10;
+            if(out > INT_MAX/10 || out == INT_MAX/10 && tmp > 7){
+                return 0 ;
+            }
+
+            if(out < INT_MIN/10 || out == INT_MIN/10 && tmp < -8){
+                return 0 ;
+            }
+            out = out * 10 + tmp;
+        }
+        return out;
+    }
+};
+\end{lstlisting}
