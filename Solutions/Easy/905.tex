@@ -1,0 +1,30 @@
+\chapter{905. Sort Array By Parity}
+\section{Description}
+Given an integer array nums, move all the even integers at the beginning of the array followed by all the odd integers.
+\\
+Return any array that satisfies this condition.
+\section{Results}
+\textbf{Runtime:}
+8 ms, faster than 88.01\% of C++ online submissions for Sort Array By Parity.\\
+16.1 MB, less than 83.25\% of C++ online submissions for Sort Array By Parity.\\
+\textbf{Memory Usage:}
+\newpage
+\section{Attempt 1}
+Because it doesn't need to be in any specific order you can sort in place to preserve space. Have a pointer to the front and end and swap everytime the end pointer comes across an even number
+\begin{lstlisting}
+class Solution {
+public:
+    vector<int> sortArrayByParity(vector<int>& nums) 
+    {
+        int i=0,j=nums.size()-1;
+        while(i<=j)
+        {
+            if(nums[j]%2==0)
+                swap(nums[i++],nums[j]);
+            else
+                j--;
+        }
+        return nums;
+    }
+};
+\end{lstlisting}
