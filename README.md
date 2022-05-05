@@ -1,5 +1,5 @@
 # LeetCode
 My Solutions to my LeetCode problems
-# Current Streak <u>8 Days</u>
+# Current Streak <u>10 Days</u>
 
 [View the PDF](https://raw.githubusercontent.com/Keaton-Clark/LeetCode/main/main.pdf)
