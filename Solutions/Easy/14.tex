@@ -1,0 +1,36 @@
+\chapter{14. Longest Common Prefix}
+\section{Description}
+Write a function to find the longest common prefix string amongst an array of strings.
+\\
+If there is no common prefix, return an empty string "".
+\section{Results}
+\textbf{Runtime:}
+3 ms, faster than 87.80\% of C++ online submissions for Longest Common Prefix.
+\textbf{Memory Usage:}
+9.7 MB, less than 10.42\% of C++ online submissions for Longest Common Prefix.
+\newpage
+\section{Attempt 1}
+Just keep carrying on the greatest common prefix and compare it to the next string.
+\begin{lstlisting}
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        string out = strs[0];
+        for (int i = 1; i < strs.size(); ++i) {
+            out = getLongest(out, strs[i]);
+        }
+        return out;
+    }
+    
+    string getLongest(string str1, string str2) {
+        if (str1.length() > str2.length()) swap(str1, str2);
+        string out = "";
+        for (int i = 0; i < str1.length(); ++i) {
+            if (str1[i] == str2[i])
+                out += str1[i];
+            else return out;
+        }
+        return out;
+    }
+};
+\end{lstlisting}
